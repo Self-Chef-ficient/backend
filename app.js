@@ -5,6 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const quiz = require('./quiz-ingr.json');
+const quiz_image = require('./quiz-img.json');
 
 const {authenticate } = require('./middleware/auth-middleware');
 const authController = require('./controllers/auth-controller');
@@ -55,6 +56,9 @@ app.get('/quiz', (req, res) => {
   res.json(quiz);
 });
 
+app.get('/quizimg', (req, res) => {
+  res.json(quiz_image);
+});
 
 
 // Error handling middleware
