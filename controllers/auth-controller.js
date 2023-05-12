@@ -51,7 +51,7 @@ const login = async (req, res) => {
 
 
 
-        res.status(200).send({ token });
+        res.status(200).send({ token: token, email: email, first_name: user.first_name, last_name: user.last_name, id: user.id});
 
 
       } else {

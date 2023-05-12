@@ -86,11 +86,69 @@ const getRecipeRecommendation = async (req, res) => {
 
 
 
+    const getRecipeRecommendation2 = async (req, res) => {  
+    const preferences=JSON.stringify(req.body);
+    console.log(preferences);
+
+    const parsedPreferences = JSON.parse(preferences);
+    const convertedPreferences = {};
+
+
+    parsedPreferences.liked.forEach((item) => {
+      convertedPreferences[item] = "liked";
+    });
+
+    parsedPreferences.disliked.forEach((item) => {
+      convertedPreferences[item] = "disliked";
+    });
+    
+    console.log(convertedPreferences);
+    const recsApiInput = {
+      "user": "f1393d83-fef8-439a-8fb3-3fb018632fb0",
+      "quiz": convertedPreferences
+    };
+    console.log(recsApiInput);
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    
+  
+    try {
+      const response = await axios.post('http://34.127.17.81/getRecs', JSON.stringify(recsApiInput), config);
+      const recipieIdList = response.data.recommendations;
+      console.log("inside:", recipieIdList);
+      
+      const recommendationArray = [];
+      for (let i = 0; i < recipieIdList.length; i++) {
+        const result = await foodService.getFoodById(recipieIdList[i]);
+        if (result != null) {
+          recommendationArray.push(result);
+        }
+      }
+      
+      console.log(recommendationArray);
+      res.json({ recommendations: recommendationArray });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'An error occurred' });
+    }
+
+
+
+
+
+      
+      
+      };
+      
 
 
 module.exports = {
     createFood,
     getFoodById,
     getRecipeRecommendation,
+    getRecipeRecommendation2
     
 };
