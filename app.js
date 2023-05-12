@@ -4,11 +4,13 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
+const quiz = require('./quiz-ingr.json');
 
 const {authenticate } = require('./middleware/auth-middleware');
 const authController = require('./controllers/auth-controller');
 const authRouter = require('./routes/auth-router');
-
+const foodController = require('./controllers/food-controller');
+const foodRouter = require('./routes/food-router');
 
 
 
@@ -16,6 +18,7 @@ const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.json());
 // enable cors
 //create a whitelist of allowed domains for cors
 const corsWhitelist=['https://www.google.com','127.0.0.1:3000','http://localhost:3000']
@@ -32,29 +35,27 @@ const corsOptions={
 app.use(cors(corsOptions));
 
 
-app.use(session({
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: false,
-}));
-
-
-app.post('/register', authController.register);
-app.post('/login', authController.login);
-app.get('/logout', authController.logout);
 
 app.get('/home', authenticate, (req, res) => {
-  console.log(req.session);
-  console.log(req.body)
-  res.status(200).send(`Welcome home \n You are logged in as now in protected path`);
+  console.log(req.userEmail);
+  console.log(req.userID);
+  res.status(200).send(`Welcome home \n You are logged in as ${req.userEmail} with id ${req.userID} now in protected path`);
 });
 // Route
 app.use('/auth', authRouter);
+app.use('/food', foodRouter);
 
 // Empty path route
 app.get('/', (req, res) => {
   res.send('Welcome to the home page');
 });
+
+//create a get route for the quiz which returns "hello world"
+app.get('/quiz', (req, res) => {
+  res.json(quiz);
+});
+
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {
