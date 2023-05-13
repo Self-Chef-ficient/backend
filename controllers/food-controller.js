@@ -6,6 +6,7 @@ const saltRounds = 10;
 const secret = process.env.JWT_SECRET;
 
 
+
 const { v4: uuidv4 } = require('uuid');
 const foodService = require('../services/food-service');
 
@@ -142,6 +143,62 @@ const getRecipeRecommendation = async (req, res) => {
       
       
       };
+
+
+      const getRecipeRecommendation3 = async (req, res) => {  
+        const preferences=req.body;
+        console.log(preferences);
+  
+        const recsApiInput = {
+          "user": "f1393d83-fef8-439a-8fb3-3fb018632fb0",
+          "quiz": {}
+        };
+        preferences.liked.forEach(item => {
+          recsApiInput.quiz[item] = "liked";
+        });
+        
+        preferences.disliked.forEach(item => {
+          recsApiInput.quiz[item] = "disliked";
+        });
+
+        console.log(JSON.stringify(recsApiInput));
+        const config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        
+      
+        try {
+          console.log(recSysURL);
+          const response = await axios.post('http://34.127.17.81/getRecs', JSON.stringify(recsApiInput), config);
+          const recipieIdList = response.data.recommendations;
+          console.log("inside:", recipieIdList);
+          
+          const recommendationArray = [];
+          for (let i = 0; i < recipieIdList.length; i++) {
+            const result = await foodService.getFoodById(recipieIdList[i]);
+            if (result != null) {
+              recommendationArray.push(result);
+            }
+          }
+          
+          console.log(recommendationArray);
+          res.json({ recommendations: recommendationArray });
+          
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'An error occurred' });
+        }
+    
+    
+    
+    
+    
+          
+          
+          };
+          
       
 
 
@@ -149,6 +206,7 @@ module.exports = {
     createFood,
     getFoodById,
     getRecipeRecommendation,
-    getRecipeRecommendation2
-    
+    getRecipeRecommendation2,
+    getRecipeRecommendation3
+   
 };
