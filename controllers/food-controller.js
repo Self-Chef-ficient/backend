@@ -153,12 +153,9 @@ const getRecipeRecommendation = async (req, res) => {
           "user": "f1393d83-fef8-439a-8fb3-3fb018632fb0",
           "quiz": {}
         };
-        preferences.liked.forEach(item => {
-          recsApiInput.quiz[item] = "liked";
-        });
-        
-        preferences.disliked.forEach(item => {
-          recsApiInput.quiz[item] = "disliked";
+        preferences.ingr.forEach(item => {
+          const { name, like } = item;
+          recsApiInput.quiz[item.name] = item.like === "like" ? "liked" : "disliked";
         });
 
         console.log(JSON.stringify(recsApiInput));
@@ -185,6 +182,7 @@ const getRecipeRecommendation = async (req, res) => {
           
           console.log(recommendationArray);
           res.json({ recommendations: recommendationArray });
+          
           
         } catch (error) {
           console.error(error);

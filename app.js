@@ -4,8 +4,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const quiz = require('./quiz-ingr.json');
-const quiz_image = require('./quiz-img.json');
+const quiz = require('./quiz-ingr2.json');
+
 
 const {authenticate } = require('./middleware/auth-middleware');
 const authController = require('./controllers/auth-controller');
