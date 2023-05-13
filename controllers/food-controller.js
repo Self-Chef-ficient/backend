@@ -170,7 +170,7 @@ const getRecipeRecommendation = async (req, res) => {
         
       
         try {
-          console.log(recSysURL);
+          
           const response = await axios.post('http://34.127.17.81/getRecs', JSON.stringify(recsApiInput), config);
           const recipieIdList = response.data.recommendations;
           console.log("inside:", recipieIdList);
