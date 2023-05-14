@@ -12,6 +12,8 @@ const authController = require('./controllers/auth-controller');
 const authRouter = require('./routes/auth-router');
 const foodController = require('./controllers/food-controller');
 const foodRouter = require('./routes/food-router');
+const favRouter = require('./routes/fav-router');
+
 
 
 
@@ -45,6 +47,8 @@ app.get('/home', authenticate, (req, res) => {
 // Route
 app.use('/auth', authRouter);
 app.use('/food', foodRouter);
+app.use('/fav', favRouter);
+
 
 // Empty path route
 app.get('/', (req, res) => {
