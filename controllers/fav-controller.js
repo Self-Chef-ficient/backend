@@ -12,8 +12,9 @@ const favModel = require('../models/fav-model');
 
 const createNewFavorite = async (req, res) => {
     try {
-        console.log("new fav input",req.body)
-        const { UserId,food_id,food_name,food_link,food_method } = req.body;
+
+        console.log("new fav input",JSON.parse(JSON.stringify(req.body)));
+        const { UserId,food_id,food_name,food_link,food_method } = JSON.parse(JSON.stringify(req.body));
         console.log("user:",UserId);
         await favModel.createNewFavorite(UserId,food_id,food_name,food_link,food_method);
         res.status(201).send(`Favorite ${food_name} created`);
