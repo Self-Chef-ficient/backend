@@ -12,7 +12,9 @@ const favModel = require('../models/fav-model');
 
 const createNewFavorite = async (req, res) => {
     try {
+        console.log("new fav input",req.body)
         const { UserId,food_id,food_name,food_link,food_method } = req.body;
+        console.log("user:",UserId);
         await favModel.createNewFavorite(UserId,food_id,food_name,food_link,food_method);
         res.status(201).send(`Favorite ${food_name} created`);
     } catch (error) {
@@ -23,7 +25,8 @@ const createNewFavorite = async (req, res) => {
 
 const getFavoriteByUserId = async (req, res) => {
     try {
-        const { UserId } = req.params;
+        const { UserId } = req.body;
+        console.log("user:",UserId);
         const result = await favModel.getFavoriteByUserId(UserId);
         res.status(200).json(result);
     } catch (error) {
