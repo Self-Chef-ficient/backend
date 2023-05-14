@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 // enable cors
 //create a whitelist of allowed domains for cors
-const corsWhitelist=['https://www.google.com','127.0.0.1:3000','http://localhost:3000']
+const corsWhitelist=['https://www.google.com','127.0.0.1:3000','http://localhost:3000','http://34.168.187.133']
 //create a cors options object
 const corsOptions={
   origin: function(origin,callback){
