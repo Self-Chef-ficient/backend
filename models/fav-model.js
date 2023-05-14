@@ -27,10 +27,15 @@ client.connect()
   .then(() => console.log('Connected to Cassandra database in favorite model'))
   .catch((err) => console.error(err));
 
-const createNewFavorite = async (UserId,foodId,food_name,food_link,food_method) => {
+const createNewFavorite = async (UserId,food_id,food_name,food_link,food_method) => {
+    try{
     const query = 'INSERT INTO chef_keyspace.fav_food (UserId, food_id, food_name, food_link, food_method) VALUES (?, ?, ?, ?, ?)';
-    const result = await client.execute(query, [UserId,foodId,food_name,food_link,food_method], { prepare: true });
-    return result;
+    const result = await client.execute(query, [UserId,food_id,food_name,food_link,food_method], { prepare: true });
+    return result;}
+    catch(err){
+        console.log(err);
+        throw err;
+    }
     }
 const getFavoriteByUserId = async (UserId) => {
     const query = 'SELECT * FROM chef_keyspace.fav_food WHERE UserId = ?';
