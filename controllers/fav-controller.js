@@ -30,7 +30,7 @@ const createNewFavorite = async (req, res) => {
 
 const getFavoriteByUserId = async (req, res) => {
     try {
-        const { UserId } = req.body;
+        const { UserId } = req.params;
         console.log("user:",UserId);
         const result = await favModel.getFavoriteByUserId(UserId);
         res.status(200).json(result);
