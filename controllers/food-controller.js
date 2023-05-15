@@ -4,6 +4,8 @@ let dotenv = require('dotenv').config('../.env');
 const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 const secret = process.env.JWT_SECRET;
+const RECSYS_URL = process.env.RECSYS_URL;
+
 
 
 
@@ -64,7 +66,7 @@ const getRecipeRecommendation = async (req, res) => {
       
     
       try {
-        const response = await axios.post('http://34.127.17.81/getRecs', JSON.stringify(recsApiInput), config);
+        const response = await axios.post(RECSYS_URL, JSON.stringify(recsApiInput), config);
         const recipieIdList = response.data.recommendations;
         console.log("inside:", recipieIdList);
         
@@ -88,6 +90,7 @@ const getRecipeRecommendation = async (req, res) => {
 
 
     const getRecipeRecommendation2 = async (req, res) => {  
+      //get recommendations based on user preferences from text inputs
     const preferences=JSON.stringify(req.body);
     console.log(preferences);
 
@@ -117,7 +120,7 @@ const getRecipeRecommendation = async (req, res) => {
     
   
     try {
-      const response = await axios.post('http://34.127.17.81/getRecs', JSON.stringify(recsApiInput), config);
+      const response = await axios.post(RECSYS_URL, JSON.stringify(recsApiInput), config);
       const recipieIdList = response.data.recommendations;
       console.log("inside:", recipieIdList);
       
@@ -146,7 +149,9 @@ const getRecipeRecommendation = async (req, res) => {
 
 
       const getRecipeRecommendation3 = async (req, res) => {  
+        //get recommendations based on user preferences from quiz
         const preferences=req.body;
+        
         console.log(preferences);
   
         const recsApiInput = {
@@ -168,7 +173,7 @@ const getRecipeRecommendation = async (req, res) => {
       
         try {
           
-          const response = await axios.post('http://34.127.17.81/getRecs', JSON.stringify(recsApiInput), config);
+          const response = await axios.post(RECSYS_URL, JSON.stringify(recsApiInput), config);
           const recipieIdList = response.data.recommendations;
           console.log("inside:", recipieIdList);
           
