@@ -4,8 +4,8 @@ const morgan = require('morgan');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const session = require('express-session');
-const quiz = require('./quiz-ingr2.json');
-
+const quiz2 = require('./quiz-ingr2.json');
+const quiz1 = require('./quiz-ingr1.json');
 
 const {authenticate } = require('./middleware/auth-middleware');
 const authController = require('./controllers/auth-controller');
@@ -57,12 +57,11 @@ app.get('/', (req, res) => {
 
 //create a get route for the quiz which returns "hello world"
 app.get('/quiz', (req, res) => {
+  //pick randomly between quiz1 and quiz2
+  const quiz = Math.random() < 0.5 ? quiz1 : quiz2;
   res.json(quiz);
 });
 
-app.get('/quizimg', (req, res) => {
-  res.json(quiz_image);
-});
 
 
 // Error handling middleware

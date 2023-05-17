@@ -89,7 +89,7 @@ const getRecipeRecommendation = async (req, res) => {
 
 
 
-    const getRecipeRecommendation2 = async (req, res) => {  
+    const getRecipeRecommendationForText = async (req, res) => {  
       //get recommendations based on user preferences from text inputs
     const preferences=JSON.stringify(req.body);
     console.log(preferences);
@@ -108,7 +108,7 @@ const getRecipeRecommendation = async (req, res) => {
     
     console.log(convertedPreferences);
     const recsApiInput = {
-      "user": "f1393d83-fef8-439a-8fb3-3fb018632fb0",
+      "user": parsedPreferences.user,
       "quiz": convertedPreferences
     };
     console.log(recsApiInput);
@@ -138,24 +138,17 @@ const getRecipeRecommendation = async (req, res) => {
       console.error(error);
       res.status(500).json({ error: 'An error occurred' });
     }
+    };
 
 
-
-
-
-      
-      
-      };
-
-
-      const getRecipeRecommendation3 = async (req, res) => {  
+      const getRecipeRecommendationFromQuiz = async (req, res) => {  
         //get recommendations based on user preferences from quiz
         const preferences=req.body;
         
         console.log(preferences);
   
         const recsApiInput = {
-          "user": "f1393d83-fef8-439a-8fb3-3fb018632fb0",
+          "user": preferences.user,
           "quiz": {}
         };
         preferences.ingr.forEach(item => {
@@ -192,15 +185,8 @@ const getRecipeRecommendation = async (req, res) => {
         } catch (error) {
           console.error(error);
           res.status(500).json({ error: 'An error occurred' });
-        }
-    
-    
-    
-    
-    
-          
-          
-          };
+        } 
+    };
           
       
 
@@ -209,7 +195,7 @@ module.exports = {
     createFood,
     getFoodById,
     getRecipeRecommendation,
-    getRecipeRecommendation2,
-    getRecipeRecommendation3
+    getRecipeRecommendationForText,
+    getRecipeRecommendationFromQuiz
    
 };

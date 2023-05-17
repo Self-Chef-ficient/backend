@@ -7,8 +7,8 @@ const router = express.Router();
 router.post('/create', foodController.createFood);
 router.get('/:id', foodController.getFoodById);
 router.post('/recommend', foodController.getRecipeRecommendation);
-router.post('/recommend2', foodController.getRecipeRecommendation2);
-router.post('/recommend3', foodController.getRecipeRecommendation3);
+router.post('/recommendText', foodController.getRecipeRecommendationForText);
+router.post('/recommendQuiz', foodController.getRecipeRecommendationFromQuiz);
 
 
 module.exports = router;
