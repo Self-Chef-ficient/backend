@@ -143,7 +143,7 @@ const getRecipeRecommendation = async (req, res) => {
 
       const getRecipeRecommendationFromQuiz = async (req, res) => {  
         //get recommendations based on user preferences from quiz
-        const preferences=req.body.quiz;
+        const preferences=req.body;
         
         console.log(preferences);
   
